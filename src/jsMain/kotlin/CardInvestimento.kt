@@ -12,7 +12,7 @@ data class CardInvestimento(val nome: String, var montante: Double) {
     companion object {
         fun create(cardName: String, montante: Number, save: Boolean = true) {
             val home = document.getElementById("Home") ?: return
-            val card = document.create.div(classes = "card bg-dark mt-2 mb-2") {
+            val card = document.create.div(classes = "card bg-dark mt-2 mb-2 w-100") {
                 div(classes = "card-header d-flex justify-content-between align-items-center") {
                     h5(classes = "mb-0") {
                         +cardName
