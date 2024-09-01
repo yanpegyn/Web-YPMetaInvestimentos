@@ -3,6 +3,7 @@ package com.yanpegyn
 import kotlinx.browser.document
 import kotlinx.html.*
 import kotlinx.html.dom.create
+import kotlinx.html.js.onClickFunction
 import org.w3c.dom.HTMLElement
 
 class TelaMain {
@@ -13,26 +14,32 @@ class TelaMain {
                 div {
                     id = "Home"
                     classes = setOf("content")
+                    button(classes = "floating-btn btn btn-success btn-calculate") {
+                        +"Calcular"
+                        type = ButtonType.button
+                    }
+                    button(classes = "floating-btn btn btn-primary btn-plus") {
+                        type = ButtonType.button
+                        title = "Botão Adicionar"
+                        attributes["data-bs-toggle"] = "modal"
+                        attributes["data-bs-target"] = "#staticBackdrop"
+                    }
                 }
                 div {
                     id = "Configurar"
                     classes = setOf("content", "d-none")
-                    +"ipsum"
+                    button(classes = "floating-btn btn btn-success btn-salvar") {
+                        +"Salvar"
+                        type = ButtonType.button
+                        onClickFunction = {
+                            Config.salvar(it)
+                        }
+                    }
                 }
                 div {
                     id = "Resultado"
                     classes = setOf("content", "d-none")
                     +"dolot"
-                }
-                button(classes = "floating-btn btn btn-success btn-calculate") {
-                    +"Calcular"
-                    type = ButtonType.button
-                }
-                button(classes = "floating-btn btn btn-primary btn-plus") {
-                    type = ButtonType.button
-                    title = "Botão Adicionar"
-                    attributes["data-bs-toggle"] = "modal"
-                    attributes["data-bs-target"] = "#staticBackdrop"
                 }
             }
             main.append(Modal.makeModal())
@@ -40,6 +47,15 @@ class TelaMain {
         }
 
         fun popular() {
+            carregarCardsNaHome()
+            construirLayoutDeConfig()
+        }
+
+        fun construirLayoutDeConfig() {
+            val configurar = document.getElementById("Configurar")?: return
+            configurar.append(Config.make())
+        }
+        fun carregarCardsNaHome() {
             val cards = Database.recuperarListaDeCards("listaDeCards") ?: mutableListOf()
             for(card in cards) {
                 CardInvestimento.create(card.nome, card.montante, save=false)

@@ -1,6 +1,6 @@
 package com.yanpegyn
 import kotlinx.browser.localStorage
-import kotlinx.html.OBJECT
+import kotlinx.datetime.Month
 
 class Database {
     companion object {
@@ -27,6 +27,21 @@ class Database {
             }
             val mutable = arrayMapeado.toMutableList()
             return mutable
+        }
+
+        fun salvarConfigs(config: Config, chave: String) {
+            val obj = "{\"taxa\":${config.taxa}, \"objetivo\":${config.objetivo}, \"meta\":${config.meta}, \"dataInicio\":\"${config.dataInicio}\"}"
+            val jsonString = JSON.stringify(JSON.parse(obj))
+            localStorage.setItem(chave, jsonString)
+        }
+
+        fun recuperarConfigs(chave: String): Config? {
+            val jsonString = localStorage.getItem(chave) ?: return null
+            val obj: dynamic = JSON.parse(jsonString)?: return null
+            return Config(
+                obj.taxa as Double, obj.objetivo as Double,
+                obj.meta as Double, obj.dataInicio as String,
+            )
         }
     }
 }
