@@ -92,6 +92,7 @@ class Calculos {
             var excessoMesesInvestido = (variandoMeta / metaInvestirMensal).toInt()
             excessoMesesInvestido = if (excessoMesesInvestido > 0) excessoMesesInvestido else 0
             val valorExcedenteRestante = variandoMeta % metaInvestirMensal
+
             if (proxMesValor == 0.0) {
                 retorno["MesesExcedentes"] = "$excessoMesesInvestido Meses"
                 retorno["ValorExcedenteRestante"] = "R$${valorExcedenteRestante.asDynamic().toFixed(2)}"

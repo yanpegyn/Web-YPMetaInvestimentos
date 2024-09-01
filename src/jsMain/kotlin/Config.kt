@@ -11,6 +11,7 @@ data class Config(val taxa: Double, val objetivo: Double, val meta: Double, val 
     companion object {
         fun make(): HTMLElement {
             val configs = Database.recuperarConfigs("config-page")
+            if (configs != null) Database.cacheConfig = configs
             val formulario = document.create.div(classes = "d-flex flex-column"){
                 div(classes = "mb-3 d-flex align-items-center") {
                     label(classes = "form-label me-2") {

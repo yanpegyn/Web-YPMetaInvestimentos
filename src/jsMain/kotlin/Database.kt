@@ -6,6 +6,7 @@ class Database {
     companion object {
 
         lateinit var cacheCards: MutableList<CardInvestimento>
+        lateinit var cacheConfig: Config
 
         fun salvarListaDeCards(cards: List<CardInvestimento>, chave: String) {
             var li = "["
@@ -32,6 +33,7 @@ class Database {
         }
 
         fun salvarConfigs(config: Config, chave: String) {
+            cacheConfig = config
             val obj = "{\"taxa\":${config.taxa}, \"objetivo\":${config.objetivo}, \"meta\":${config.meta}, \"dataInicio\":\"${config.dataInicio}\"}"
             val jsonString = JSON.stringify(JSON.parse(obj))
             localStorage.setItem(chave, jsonString)
