@@ -44,6 +44,15 @@
     font-size: 16px;
 }
 
+.btn-salvar {
+    right: 20px;
+    border-radius: 5px; /* Cantos arredondados */
+    padding: 10px 20px;
+    width: auto;
+    height: auto;
+    font-size: 16px;
+}
+
 .pb-90px {
     padding-bottom: 90px;
 }
