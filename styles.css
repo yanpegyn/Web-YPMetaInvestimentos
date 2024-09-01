@@ -56,3 +56,13 @@
 .pb-90px {
     padding-bottom: 90px;
 }
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+main {
+    height: 100vh; /* Ocupa 100% da altura da viewport */
+    overflow-y: auto; /* Permite rolagem vertical quando necessário */
+}
