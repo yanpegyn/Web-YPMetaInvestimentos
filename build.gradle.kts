@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
+
 plugins {
     kotlin("multiplatform") version "2.0.20"
 }
@@ -24,7 +26,14 @@ dependencies {
 
 kotlin {
     js(IR) {
-        browser()
+        browser{
+//            commonWebpackConfig {
+//                cssSupport {
+//                    enabled=true
+//                }
+//                mode = KotlinWebpackConfig.Mode.DEVELOPMENT // Use o modo de desenvolvimento
+//            }
+        }
         binaries.executable()
     }
     sourceSets {
