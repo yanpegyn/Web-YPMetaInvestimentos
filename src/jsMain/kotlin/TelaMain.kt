@@ -10,13 +10,22 @@ class TelaMain {
     companion object {
         fun make(): HTMLElement {
             val main = document.create.main {
-                classes = setOf("container-fluid", "flex-fill", "pt-2", "pb-90px")
+                classes = setOf("container-fluid", "flex-fill", "pt-2")
                 div {
                     id = "Home"
-                    classes = setOf("content")
+                    classes = setOf("content", "pb-90px")
                     button(classes = "floating-btn btn btn-success btn-calculate") {
                         +"Calcular"
                         type = ButtonType.button
+                        onClickFunction = {
+                            val button = it.currentTarget as? HTMLElement
+                            button?.parentElement?.classList?.add("d-none")
+                            val res = document.getElementById("Resultado")
+                            if (res != null) {
+                                Resultados.open(res)
+                                res.classList.remove("d-none")
+                            }
+                        }
                     }
                     button(classes = "floating-btn btn btn-primary btn-plus") {
                         type = ButtonType.button
@@ -39,7 +48,15 @@ class TelaMain {
                 div {
                     id = "Resultado"
                     classes = setOf("content", "d-none")
-                    +"dolot"
+                    button(classes = "floating-btn btn btn-primary btn-calculate") {
+                        +"Editar Valores"
+                        type = ButtonType.button
+                        onClickFunction = {
+                            val button = it.currentTarget as? HTMLElement
+                            button?.parentElement?.classList?.add("d-none")
+                            document.getElementById("Home")?.classList?.remove("d-none")
+                        }
+                    }
                 }
             }
             main.append(Modal.makeModal())
