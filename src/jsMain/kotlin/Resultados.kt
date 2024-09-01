@@ -45,7 +45,7 @@ class Resultados {
         fun make(): HTMLDivElement {
             if (hasBeenCreated) container.clear()
             else container = document.create.div(classes = "container-fluid p-0")
-            if (Database.cacheCards.size > 0) {
+            if (Database.isCacheReady() && Database.cacheCards.size > 0) {
                 val (ano, mes) = Database.cacheConfig.dataInicio.split("-")
                 val investimento: MutableMap<String, Double> = mutableMapOf()
                 Database.cacheCards.forEach {

@@ -8,6 +8,10 @@ class Database {
         lateinit var cacheCards: MutableList<CardInvestimento>
         lateinit var cacheConfig: Config
 
+        fun isCacheReady(): Boolean {
+            return (::cacheCards.isInitialized && ::cacheConfig.isInitialized)
+        }
+
         fun salvarListaDeCards(cards: List<CardInvestimento>, chave: String) {
             var li = "["
             var first = true
