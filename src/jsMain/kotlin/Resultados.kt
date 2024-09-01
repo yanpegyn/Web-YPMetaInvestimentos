@@ -34,11 +34,14 @@ class Resultados {
                 }
             }
             val containerInferior = document.create.div(classes = "container-fluid p-0 vh-30") {
-                p {
-                    + "Para atingir o seu objetivo, levará aproximadamente:"
+                hr()
+                b {
+                    p {
+                        + "Seu objetivo, levará aproximadamente:"
+                    }
                 }
                 p {
-                    + "Seguindo o Plando: $prazoPlano"
+                    + "Seguindo o Plano: $prazoPlano"
                 }
                 p {
                     + "Mantendo o Ritmo: $prazoRitmo"
