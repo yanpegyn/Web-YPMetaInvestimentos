@@ -63,10 +63,15 @@ class Modal {
                                 onClickFunction = {
                                     val inputNome = document.getElementById("input_nome")!! as HTMLInputElement
                                     val inputMontante = document.getElementById("input_montante")!! as HTMLInputElement
-                                    val validNome: Boolean
+                                    var validNome: Boolean
                                     var validMontante: Boolean
                                     val nome = inputNome.value.trim()
-                                    if (nome.isNotEmpty()) {
+
+                                    var nomeDuplicado = false
+                                    for (card in Database.cacheCards) {
+                                        if (card.nome == nome) nomeDuplicado = true
+                                    }
+                                    if (nome.isNotEmpty() && !nomeDuplicado) {
                                         inputNome.classList.remove("is-invalid")
                                         validNome = true
                                     } else {

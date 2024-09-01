@@ -57,6 +57,7 @@ class TelaMain {
         }
         fun carregarCardsNaHome() {
             val cards = Database.recuperarListaDeCards("listaDeCards") ?: mutableListOf()
+            Database.cacheCards = cards
             for(card in cards) {
                 CardInvestimento.create(card.nome, card.montante, save=false)
             }

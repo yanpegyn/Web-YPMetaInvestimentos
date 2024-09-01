@@ -3,10 +3,12 @@ package com.yanpegyn
 import kotlinx.browser.document
 import kotlinx.html.*
 import kotlinx.html.dom.create
+import kotlinx.html.js.onChangeFunction
 import kotlinx.html.js.onClickFunction
+import kotlinx.html.js.onInputFunction
 import org.w3c.dom.*
 
-data class CardInvestimento(val nome: String, val montante: Double) {
+data class CardInvestimento(val nome: String, var montante: Double) {
     companion object {
         fun create(cardName: String, montante: Number, save: Boolean = true) {
             val home = document.getElementById("Home") ?: return
@@ -40,6 +42,18 @@ data class CardInvestimento(val nome: String, val montante: Double) {
                             type = InputType.text
                             placeholder = "Digite o montante"
                             value = montante.toString()
+                            var beforeValue = montante.toString()
+                            onInputFunction = {
+                                val target = it.target as HTMLInputElement
+                                val currentValue = target.value
+                                try {
+                                    atualizarCard(cardName, currentValue.toDouble())
+                                    beforeValue = currentValue
+                                } catch (e: Exception) {
+                                    console.log("CHANGED EXCEPTION")
+                                    target.value = beforeValue
+                                }
+                            }
                         }
                     }
                 }
@@ -49,16 +63,35 @@ data class CardInvestimento(val nome: String, val montante: Double) {
         }
 
         private fun salvarCard(nome: String, montante: Double) {
-            val cards = Database.recuperarListaDeCards("listaDeCards") ?: mutableListOf()
+            val cards = Database.cacheCards
+            // val cards = Database.recuperarListaDeCards("listaDeCards") ?: mutableListOf()
             val novoCard = CardInvestimento(nome, montante)
             cards.add(novoCard)
             Database.salvarListaDeCards(cards, "listaDeCards")
         }
 
+
+        private fun atualizarCard(nome: String, montante: Double) {
+            val cards = Database.cacheCards
+            // val cards = Database.recuperarListaDeCards("listaDeCards") ?: mutableListOf()
+            for (card in cards) {
+                if (card.nome == nome) {
+                    card.montante = montante
+                    break
+                }
+            }
+            Database.salvarListaDeCards(cards, "listaDeCards")
+        }
+
         private fun deletarCard(nome: String, montante: Double) {
-            val cards = Database.recuperarListaDeCards("listaDeCards") ?: mutableListOf()
-            val toDelete = CardInvestimento(nome, montante)
-            cards.remove(toDelete)
+            val cards = Database.cacheCards
+            // val cards = Database.recuperarListaDeCards("listaDeCards") ?: mutableListOf()
+            for (card in cards) {
+                if (card.nome == nome) {
+                    cards.remove(card)
+                    break
+                }
+            }
             Database.salvarListaDeCards(cards, "listaDeCards")
         }
     }

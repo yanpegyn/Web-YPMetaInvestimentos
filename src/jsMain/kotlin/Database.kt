@@ -5,6 +5,8 @@ import kotlinx.datetime.Month
 class Database {
     companion object {
 
+        lateinit var cacheCards: MutableList<CardInvestimento>
+
         fun salvarListaDeCards(cards: List<CardInvestimento>, chave: String) {
             var li = "["
             var first = true
